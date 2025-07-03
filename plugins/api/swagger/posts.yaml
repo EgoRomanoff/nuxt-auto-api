@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: JSONPlaceholder API
+  description: Официальное документирование фейкового REST API для тестирования и прототипирования.
+  version: 1.0.0
+  contact:
+    name: JSONPlaceholder Team
+    url: https://jsonplaceholder.typicode.com/
+servers:
+  - url: https://jsonplaceholder.typicode.com
+    description: Production server
+
+paths:
+  /posts:
+    get:
+      summary: Получить список всех постов
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+    post:
+      summary: Создать новый пост
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostInput'
+      responses:
+        '201':
+          description: Пост успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+  /posts/{id}:
+    get:
+      summary: Получить пост по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: Пост не найден
+    put:
+      summary: Обновить существующий пост
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostInput'
+      responses:
+        '200':
+          description: Пост успешно обновлён
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: Пост не найден
+    delete:
+      summary: Удалить пост по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Пост удалён
+        '404':
+          description: Пост не найден
+
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+      required:
+        - id
+        - userId
+        - title
+        - body
+
+    PostInput:
+      type: object
+      properties:
+        userId:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+      required:
+        - userId
+        - title
+        - body

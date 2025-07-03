@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: JSONPlaceholder Comments API
+  description: Документация к ресурсу /comments из JSONPlaceholder
+  version: 1.0.0
+servers:
+  - url: https://jsonplaceholder.typicode.com
+    description: Production server
+
+paths:
+  /comments:
+    get:
+      summary: Получить список всех комментариев
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+    post:
+      summary: Создать новый комментарий
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentInput'
+      responses:
+        '201':
+          description: Комментарий успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+
+  /comments/{id}:
+    get:
+      summary: Получить комментарий по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Комментарий не найден
+    put:
+      summary: Обновить комментарий
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentInput'
+      responses:
+        '200':
+          description: Комментарий обновлён
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Комментарий не найден
+    delete:
+      summary: Удалить комментарий
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Комментарий удалён
+        '404':
+          description: Комментарий не найден
+
+components:
+  schemas:
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        postId:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        body:
+          type: string
+      required:
+        - id
+        - postId
+        - name
+        - email
+        - body
+
+    CommentInput:
+      type: object
+      properties:
+        postId:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        body:
+          type: string
+      required:
+        - postId
+        - name
+        - email
+        - body
