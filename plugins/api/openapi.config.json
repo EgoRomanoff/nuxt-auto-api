@@ -1,0 +1,14 @@
+{
+  "inputs": [
+    {
+      "inputFile": "./swagger/comments.yaml"
+    },
+    {
+      "inputFile": "./swagger/posts.yaml"
+    },
+    {
+      "inputFile": "./swagger/users.yaml"
+    }
+  ],
+  "output": "./swagger/openapi.json"
+}
