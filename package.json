@@ -8,8 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "swagger-merge": "pnpm exec openapi-merge-cli --config ./plugins/api/openapi.config.json",
-    "codegen:api": "node plugins/api/codegen.js",
+    "swagger-merge": "pnpm exec openapi-merge-cli --config ./plugins/01.api/openapi.config.json",
+    "codegen:api": "node plugins/01.api/codegen.js",
     "codegen": "pnpm swagger-merge && pnpm codegen:api"
   },
   "dependencies": {

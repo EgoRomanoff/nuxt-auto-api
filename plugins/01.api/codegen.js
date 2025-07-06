@@ -1,28 +1,40 @@
 import * as path from "node:path";
 import { generateApi } from 'swagger-typescript-api';
 
-// Генерация API-клиента на основе OpenAPI-спецификации
-generateApi({
-    // Путь до локального файла спецификации (JSON или YAML).
-    // Используется, если ты не передан url.
-    input: path.resolve(process.cwd(), './plugins/api/swagger/openapi.json'),
+await generateApi({
+    /**
+     * Путь до локального файла спецификации (JSON или YAML).
+     * Используется, если ты не передан url.
+     */
+    input: path.resolve(process.cwd(), './plugins/01.api/swagger/openapi.json'),
 
-    // Папка, в которую будет сгенерирован код.
-    // Если false, код не будет писаться в файловую систему
-    // (можно использовать как in-memory генерацию).
-    output: path.resolve(process.cwd(), './plugins/api/model'),
+    /**
+     * Папка, в которую будет сгенерирован код.
+     * Если false, код не будет писаться в файловую систему
+     * (можно использовать как in-memory генерацию).
+     */
+    output: path.resolve(process.cwd(), './plugins/01.api/model'),
 
-    // URL к swagger-файлу (обычно openapi.json), если не используется input.
-    // url: string;
+    /**
+     * URL к swagger-файлу (обычно openapi.json), если не используется input.
+     */
+    url: undefined,
 
-    // Сам объект OpenAPI спецификации (можно прокинуть напрямую).
-    // Переопределяет url и input, если задан.
-    // spec: unknown;
+    /**
+     * Сам объект OpenAPI спецификации (можно прокинуть напрямую).
+     * Переопределяет url и input, если задан.
+     */
+    // spec: undefined,
 
-    // Имя выходного файла (если modular: false). Используется в немодульной генерации.
+    /**
+     * Имя выходного файла (если modular: false). Используется в немодульной генерации.
+     */
     fileName: 'api.ts',
 
-    // Пути к директориям с шаблонами .hbs. Используется для генерации файлов
+    /**
+     * Пути к директориям с шаблонами, Используется для генерации файлов
+     */
+    // TODO: разобраться до конца
     // templatePaths: {
     //     /** `templates/base` базовые шаблоны */
     //     base: string;
@@ -36,33 +48,52 @@ generateApi({
     //     custom: string | null;
     // };
 
-    // Токен для авторизации при загрузке спеки с url.
-    // Автоматически пробрасывается в заголовок Authorization: Bearer ${token}.
-    // authorizationToken?: string;
+    /**
+     * Токен для авторизации при загрузке спеки с url.
+     * Автоматически пробрасывается в заголовок Authorization: Bearer ${token}.
+     */
+    // authorizationToken: undefined,
 
-    // Генерировать типы ответов API
+    /**
+     * Генерировать типы ответов API
+     */
     generateResponses: true,
 
-    // Если у эндпоинта есть default ответ — считать его успешным (200-299), а не ошибкой
-    // defaultResponseAsSuccess: boolean;
+    /**
+     * Если у эндпоинта есть default ответ — считать его успешным (200-299), а не ошибкой
+     */
+    defaultResponseAsSuccess: false,
 
-    // Генерация enum/типов с названием маршрутов (например, "GET_/users"). Полезно для type-safe роутинга
+    /**
+     * Генерация enum/типов с названием маршрутов (например, "GET_/users").
+     * Полезно для type-safe роутинга
+     */
     generateRouteTypes: true,
 
-    // Генерировать клиент для работы с API
-    // Если false, будут только типы и контракты.
+    /**
+     * Генерировать клиент для работы с API
+     * Если false, будут только типы и контракты.
+     */
     generateClient: true,
 
-    // Использовать объединённые enum-типы (`enum | string`)
-    // Делает из enum-ов union-type ('A' \| 'B') вместо enum { A = 'A' }.
+    /**
+     * Использовать объединённые enum-типы (`enum | string`)
+     * Делает из enum-ов union-type ('A' \| 'B') вместо enum { A = 'A' }.
+     */
     generateUnionEnums: true,
 
-    // Спека OpenAPI после и до трансформации.
-    // Используется внутри генератора для обработки.
+    /**
+     * Спека OpenAPI после и до трансформации.
+     * Используется внутри генератора для обработки.
+     */
+    // TODO: разобраться до конца
     // swaggerSchema: object;
     // originalSchema: object;
 
-    // Карта всех components.schemas и их метаданных (внутренняя структура генератора).
+    /**
+     * Карта всех components.schemas и их метаданных
+     * (внутренняя структура генератора).
+     */
     // componentsMap: Record<string, SchemaComponent>;
 
     // Был ли оригинальный документ в Swagger 2.0 и преобразован в OpenAPI 3.
@@ -140,8 +171,10 @@ generateApi({
     //  Тип, который будет использоваться по умолчанию для ответа (если тип не определён явно).
     // defaultResponseType: string;
 
-    // Генерировать .js + .d.ts вместо .ts (для JS-проектов с типами).
-    // toJS: boolean;
+    /**
+     * Генерировать .js + .d.ts вместо .ts (для JS-проектов с типами).
+     */
+    toJS: false,
 
     // Не кидать ошибку, если при генерации что-то пошло не так.
     // disableThrowOnError: boolean;

@@ -4,6 +4,6 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
 
     plugins: [
-      '~/plugins/api/01.index.ts',
+      '~/plugins/01.api/index.ts',
     ]
 })
