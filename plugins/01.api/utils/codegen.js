@@ -4,13 +4,13 @@ import { generateApi } from 'swagger-typescript-api';
 await generateApi({
     /**
      * Путь до локального файла спецификации (JSON или YAML).
-     * Используется, если ты не передан url.
+     * Используется, если не передан url.
      */
-    input: path.resolve(process.cwd(), './plugins/01.api/swagger/openapi.json'),
+    input: path.resolve(process.cwd(), './plugins/01.api/openapi/openapi.json'),
 
     /**
      * Папка, в которую будет сгенерирован код.
-     * Если false, код не будет писаться в файловую систему
+     * Если false, код не будет записываться в файловую систему
      * (можно использовать как in-memory генерацию).
      */
     output: path.resolve(process.cwd(), './plugins/01.api/model'),
@@ -29,7 +29,7 @@ await generateApi({
     /**
      * Имя выходного файла (если modular: false). Используется в немодульной генерации.
      */
-    fileName: 'api.ts',
+    fileName: process.env.GENERATED_API_FILE ?? 'api.ts',
 
     /**
      * Пути к директориям с шаблонами, Используется для генерации файлов

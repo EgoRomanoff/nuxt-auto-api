@@ -1,0 +1,11 @@
+{
+  "inputs": [
+    {
+      "inputFile": "./forecast.yaml"
+    },
+    {
+      "inputFile": "./weather.yaml"
+    }
+  ],
+  "output": "./openapi.json"
+}

@@ -8,8 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "swagger-merge": "pnpm exec openapi-merge-cli --config ./plugins/01.api/openapi.config.json",
-    "codegen:api": "node plugins/01.api/codegen.js",
+    "swagger-merge": "pnpm exec openapi-merge-cli --config ./plugins/01.api/openapi/openapi.config.json",
+    "codegen:api": "node plugins/01.api/utils/codegen.js",
     "codegen": "pnpm swagger-merge && pnpm codegen:api"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
   "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184",
   "devDependencies": {
     "openapi-merge-cli": "^1.3.2",
-    "swagger-typescript-api": "^13.2.7"
+    "swagger-typescript-api": "^13.2.7",
+    "typescript": "^5.8.3"
   }
 }

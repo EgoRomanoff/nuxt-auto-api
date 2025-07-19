@@ -1,0 +1,109 @@
+openapi: 3.0.3
+info:
+  title: OpenWeatherMap – Current Weather by Coordinates
+  version: "1.0.0"
+  description: Получение текущей погоды по географическим координатам через OpenWeatherMap API.
+  contact:
+    name: OpenWeatherMap
+    url: https://openweathermap.org/api
+
+servers:
+  - url: https://api.openweathermap.org/data/2.5
+
+paths:
+  /weather:
+    get:
+      summary: Получить текущую погоду по координатам
+      description: |
+        Возвращает текущую погоду для указанных координат. Требуется API ключ (`appid`).
+      parameters:
+        - in: query
+          name: lat
+          required: true
+          schema:
+            type: number
+          description: Широта (например, `55.75`)
+        - in: query
+          name: lon
+          required: true
+          schema:
+            type: number
+          description: Долгота (например, `37.62`)
+        - in: query
+          name: appid
+          required: true
+          schema:
+            type: string
+          description: Твой API ключ от OpenWeatherMap
+        - in: query
+          name: units
+          required: false
+          schema:
+            type: string
+            enum: [standard, metric, imperial]
+            default: metric
+          description: Единицы измерения (`metric` = Цельсий, `imperial` = Фаренгейт)
+        - in: query
+          name: lang
+          required: false
+          schema:
+            type: string
+            default: ru
+          description: Язык локализации (`ru`, `en`, и т.д.)
+      responses:
+        '200':
+          description: Успешный ответ с погодой
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeatherResponse'
+        '401':
+          description: Неверный API ключ
+        '400':
+          description: Не переданы обязательные параметры
+
+components:
+  schemas:
+    WeatherResponse:
+      type: object
+      properties:
+        coord:
+          type: object
+          properties:
+            lon:
+              type: number
+            lat:
+              type: number
+        weather:
+          type: array
+          items:
+            type: object
+            properties:
+              main:
+                type: string
+              description:
+                type: string
+              icon:
+                type: string
+        main:
+          type: object
+          properties:
+            temp:
+              type: number
+            feels_like:
+              type: number
+            pressure:
+              type: integer
+            humidity:
+              type: integer
+        wind:
+          type: object
+          properties:
+            speed:
+              type: number
+            deg:
+              type: integer
+        name:
+          type: string
+        dt:
+          type: integer

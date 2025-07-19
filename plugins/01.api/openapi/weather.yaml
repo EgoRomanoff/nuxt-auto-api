@@ -1,0 +1,134 @@
+openapi: 3.0.3
+info:
+  title: OpenWeatherMap – 5-Day Forecast API
+  version: "1.0.0"
+  description: |
+    Прогноз погоды на 5 дней с шагом в 3 часа, по названию города или координатам.
+  contact:
+    name: OpenWeatherMap
+    url: https://openweathermap.org/forecast5
+
+servers:
+  - url: https://api.openweathermap.org/data/2.5
+
+paths:
+  /forecast:
+    get:
+      summary: Получить прогноз погоды на 5 дней
+      description: |
+        Возвращает почасовой прогноз погоды на 5 дней. Использует те же параметры, что и `/weather`.
+      parameters:
+        - in: query
+          name: q
+          required: false
+          schema:
+            type: string
+          description: Название города
+        - in: query
+          name: lat
+          required: false
+          schema:
+            type: number
+          description: Широта
+        - in: query
+          name: lon
+          required: false
+          schema:
+            type: number
+          description: Долгота
+        - in: query
+          name: appid
+          required: true
+          schema:
+            type: string
+          description: Твой API ключ OpenWeatherMap
+        - in: query
+          name: units
+          schema:
+            type: string
+            enum: [standard, metric, imperial]
+            default: metric
+          description: Единицы измерения
+        - in: query
+          name: lang
+          schema:
+            type: string
+            default: ru
+          description: Язык ответа
+      responses:
+        '200':
+          description: Прогноз погоды на 5 дней
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastResponse'
+        '401':
+          description: Не авторизован
+        '400':
+          description: Ошибка параметров
+
+components:
+  schemas:
+    ForecastResponse:
+      type: object
+      properties:
+        cod:
+          type: string
+        message:
+          type: number
+        cnt:
+          type: integer
+        list:
+          type: array
+          items:
+            type: object
+            properties:
+              dt:
+                type: integer
+              main:
+                type: object
+                properties:
+                  temp:
+                    type: number
+                  feels_like:
+                    type: number
+                  pressure:
+                    type: number
+                  humidity:
+                    type: number
+              weather:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    main:
+                      type: string
+                    description:
+                      type: string
+                    icon:
+                      type: string
+              wind:
+                type: object
+                properties:
+                  speed:
+                    type: number
+                  deg:
+                    type: number
+              dt_txt:
+                type: string
+        city:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            coord:
+              type: object
+              properties:
+                lat:
+                  type: number
+                lon:
+                  type: number
+            country:
+              type: string
